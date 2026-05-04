@@ -268,4 +268,3 @@ dependencies:
       - uritemplate==4.2.0
       - urllib3==1.26.20
       - wrapt==1.17.2
-prefix: /opt/miniconda3/envs/community-notebooks
