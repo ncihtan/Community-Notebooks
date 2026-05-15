@@ -52,13 +52,19 @@ the [Cancer Gateway in the Cloud](https://isb-cgc.appspot.com/).
 ### 1.3 Notes
 
 The queries and results in this notebook correspond to ISB-CGC HTAN
-The queries and results in this notebook correspond to ISB-CGC's most current HTAN Release.
+Release 6.0. However, if no modification to the dataset occurred
+(additions or removals) since a previous release, the existing version
+remains valid. As a result, some tables retain names ending in `r3`,
+indicating they have not been updated since Release 3.0, but are still
+current for Release 6.0.
 
-To choose a specific release, edit the BigQuery table names in this notebook by replacing the relevant string endings:
+To choose a different release, edit the BigQuery table names in this
+notebook by replacing the string `r3` with a selected numbered release,
+e.g., `r2`. To get results for the most current data release, replace:
 
--   `current` with a selected numbered release, e.g., `r2`
--   `HTAN` with `HTAN_versioned`
--   `gc` with `cds` (if applicable)
+-   `r3` with `current`
+
+-   `HTAN_versioned` with `HTAN`
 
 #
 ### ⚠️PAUSE
@@ -119,7 +125,7 @@ relevant tissue slice `HTA13_1_101`.
 
 ```r
     sql <- "SELECT X_centroid, Y_centroid
-    FROM `isb-cgc-bq.HTAN.imaging_level4_HMS_crc_mask_current`
+    FROM `isb-cgc-bq.HTAN_versioned.imaging_level4_HMS_crc_mask_r3`
     WHERE HTAN_Biospecimen_ID='HTA13_1_101'"
     tb <- bq_project_query(billing, sql)
     df <- bq_table_download(tb)
@@ -217,7 +223,7 @@ table query to include the marker for keratin:
 
 ```r
     sql <- "SELECT X_centroid, Y_centroid, Keratin_570_cellRingMask 
-    FROM `isb-cgc-bq.HTAN.imaging_level4_HMS_crc_mask_current`
+    FROM `isb-cgc-bq.HTAN_versioned.imaging_level4_HMS_crc_mask_r3`
     WHERE HTAN_Biospecimen_ID='HTA13_1_101'"
     tb <- bq_project_query(billing, sql)
     df <- bq_table_download(tb)
@@ -285,7 +291,7 @@ segmentation.
 
 ```r
     sql <- "SELECT CellID, X_centroid, Y_centroid, Keratin_570_cellRingMask 
-    FROM `isb-cgc-bq.HTAN.imaging_level4_HMS_crc_mask_current` where HTAN_Biospecimen_ID='HTA13_1_101'
+    FROM `isb-cgc-bq.HTAN_versioned.imaging_level4_HMS_crc_mask_r3` where HTAN_Biospecimen_ID='HTA13_1_101'
     AND X_centroid > 5000 AND X_centroid < 7500
     AND Y_centroid > 20000 AND Y_centroid < 22500"
     tb <- bq_project_query(billing, sql)
@@ -485,7 +491,7 @@ CD45 values.
 
 ```r
     sql <- "SELECT X_centroid, Y_centroid, Keratin_570_cellRingMask,CD45_PE_cellRingMask  
-    FROM `isb-cgc-bq.HTAN.imaging_level4_HMS_crc_mask_current`
+    FROM `isb-cgc-bq.HTAN_versioned.imaging_level4_HMS_crc_mask_r3`
     WHERE HTAN_Biospecimen_ID='HTA13_1_101'
     AND X_centroid > 5000 AND X_centroid < 7500
     AND Y_centroid > 20000 AND Y_centroid < 22500"
